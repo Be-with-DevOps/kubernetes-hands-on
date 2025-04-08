@@ -1,3 +1,17 @@
 To schedule pod on specific node:
+*********************************
 YAML file:
 
+apiVersion: v1
+kind: Pod
+metadata: 
+      name: demo-pod
+      labels: 
+          name: demo-pod
+spec:
+   containers:
+   - name: con1
+     image: nginx
+     ports:
+     - containerPort: 80
+   nodeName: controlplane
