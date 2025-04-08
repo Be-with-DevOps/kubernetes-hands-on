@@ -1,1 +1,9 @@
 
+controlplane:~$ kubectl get nodes
+
+NAME           STATUS   ROLES           AGE   VERSION
+controlplane   Ready    control-plane   16d   v1.32.1
+node01         Ready    <none>          16d   v1.32.1
+
+controlplane:~$ kubectl taint nodes node01 gpu=true:NoSchedule
+node/node01 tainted
