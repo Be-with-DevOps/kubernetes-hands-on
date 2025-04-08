@@ -7,3 +7,26 @@ node01         Ready    <none>          16d   v1.32.1
 
 controlplane:~$ kubectl taint nodes node01 gpu=true:NoSchedule
 node/node01 tainted
+
+YAML file:-->
+
+apiVersion: v1
+kind: Pod
+metadata:
+      name: demo-pod
+      labels: 
+          name: demo-pod
+spec:
+   containers:
+   - name: cont1
+     image: nginx
+   tolerations:
+   - key: "gpu"
+     operator: "Equal"
+     value: "true"
+     effect: "NoSchedule"
+Output:-->
+
+controlplane:~$ kubectl get pods
+NAME       READY   STATUS    RESTARTS   AGE
+demo-pod   1/1     Running   0          4s
