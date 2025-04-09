@@ -39,3 +39,33 @@ demo-pod   1/1     Running   0          11s
 controlplane:~$ kubectl get pods -o wide
 NAME       READY   STATUS    RESTARTS   AGE     IP            NODE     NOMINATED NODE   READINESS GATES
 demo-pod   1/1     Running   0          6m55s   192.168.1.4   node01   <none>           <none>
+
+[B] Schedule a Pod using preferred node affinity:
+************************************************
+YAML file:-->
+apiVersion: v1
+kind: Pod
+metadata:
+      name: demo-pod
+      
+spec:
+   affinity:
+         nodeAffinity:
+             preferredDuringSchedulingIgnoredDuringExecution:
+             - weight: 1
+               preference:
+                   matchExpressions:
+                   - key: disktype
+                     operator: In
+                     values:
+                     - ssd
+   containers:
+   - name: nginx
+     image: nginx
+
+Output:
+_______
+controlplane:~$ kubectl get pods -o wide
+
+NAME       READY   STATUS    RESTARTS   AGE   IP            NODE     NOMINATED NODE   READINESS GATES
+demo-pod   1/1     Running   0          17s   192.168.1.4   node01   <none>           <none>
