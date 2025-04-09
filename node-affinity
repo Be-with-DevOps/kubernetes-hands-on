@@ -1,0 +1,38 @@
+1.Labeled the node
+*****************
+ kubectl label nodes node01 disktype=ssd
+
+Output: 
+node/node01 labeled
+
+2. YAML file
+*************
+apiVersion: v1
+kind: Pod
+metadata:
+      name: demo-pod
+      labels:
+          name: demo-pod
+spec:
+   containers: 
+   - name: nginx
+     image: nginx
+   affinity:
+      nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: disktype
+            operator: In
+            values:
+            - ssd  
+3. Checked the running pod
+**************************
+controlplane:~$ kubectl get pods
+
+NAME       READY   STATUS    RESTARTS   AGE
+demo-pod   1/1     Running   0          11s
+
+controlplane:~$ kubectl get pods -o wide
+NAME       READY   STATUS    RESTARTS   AGE     IP            NODE     NOMINATED NODE   READINESS GATES
+demo-pod   1/1     Running   0          6m55s   192.168.1.4   node01   <none>           <none>
