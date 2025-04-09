@@ -1,3 +1,6 @@
+[A] Schedule a Pod using required node affinity:-->
+***********************************************
+
 1.Labeled the node
 *****************
  kubectl label nodes node01 disktype=ssd
